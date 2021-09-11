@@ -28,7 +28,7 @@ router.post("/alert", async (req, res) => {
     const query = "SELECT * FROM disateruser WHERE place=? ALLOW FILTERING";
      const data = await client.execute(query, [place]);
     let mailid;
-    let content="you have future disaster"+type+" Please be safe"
+    let content="you have future disaster "+type+" Please be safe"
     data.rows.map(item=>{
       sms.send(item.phone,content)
       mailid=mailid+item.email+",";
