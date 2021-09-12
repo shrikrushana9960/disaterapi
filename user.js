@@ -2,7 +2,7 @@ const router = require("express").Router();
 const client=require("./databaseconfig");
 const userMapper=require("./Usermodel");
 const mail=require("./sendMail")
-const sms=require("./sendMessage");
+
 router.post("/save", async (req, res) => {
   try {
     console.log(req.body)
@@ -37,13 +37,12 @@ router.post("/alert", async (req, res) => {
     let content=" A potential natural disaster "+type+" has been detected in your area.  Please be safe"
     data.rows.map(item=>{
       
+
       mail.send(item.email,content,"Attention !")
-      
+
+   
     })
-    if(mailid)
-    {
-      
-    }
+  
     res.status(200).json({ message: data.rows });
   } catch (err) {
     console.log(err);
