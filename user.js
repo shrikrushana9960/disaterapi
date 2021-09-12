@@ -6,6 +6,8 @@ const sms=require("./sendMessage");
 router.post("/save", async (req, res) => {
   try {
    const rw = await userMapper.findAll();
+   if(!req.body.email)
+  res.status(500).json({ message: "Something gone Wrong body is empty"  });
    let name=req.body.name;
    let email=req.body.email;
    let phone=req.body.phone;
@@ -21,10 +23,13 @@ router.post("/save", async (req, res) => {
 
 router.post("/alert", async (req, res) => {
   try {
-   
+   if(!req.body.place)
+  res.status(500).json({ message: "Something gone Wrong body is empty"  });
+ 
    let place=req.body.place;
    let type=req.body.type;
    console.log(place)
+   
     const query = "SELECT * FROM disateruser WHERE place=? ALLOW FILTERING";
      const data = await client.execute(query, [place]);
     let mailid;
