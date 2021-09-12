@@ -5,6 +5,7 @@ const mail=require("./sendMail")
 const sms=require("./sendMessage");
 router.post("/save", async (req, res) => {
   try {
+    console.log(req.body)
    const rw = await userMapper.findAll();
    if(!req.body.email)
   res.status(500).json({ message: "Something gone Wrong body is empty"  });

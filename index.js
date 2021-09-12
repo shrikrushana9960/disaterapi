@@ -4,7 +4,8 @@ const cors=require("cors");
 var bodyParser = require('body-parser')
  const client=require("./databaseconfig");
 const dotenv = require("dotenv");
-
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
 const userRoute=require("./user")
 app.use(bodyParser.json())
 dotenv.config();
