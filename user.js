@@ -12,7 +12,7 @@ router.post("/save", async (req, res) => {
    let name=req.body.name;
    let email=req.body.email;
    let phone=req.body.phone;
-   let place=req.body.place;
+   let place=req.body.place.toLowerCase();
    
    await userMapper.insert({id:rw._rs.rowLength + 1,name:name,email:email,place:place,phone:phone})
     res.status(200).json({ message: "sucessful" });
@@ -27,7 +27,7 @@ router.post("/alert", async (req, res) => {
    if(!req.body.place)
   res.status(500).json({ message: "Something gone Wrong body is empty"  });
  
-   let place=req.body.place;
+   let place=req.body.place.toLowerCase();
    let type=req.body.type;
    console.log(place)
    
@@ -36,12 +36,13 @@ router.post("/alert", async (req, res) => {
     let mailid;
     let content="you have future disaster "+type+" Please be safe"
     data.rows.map(item=>{
-      sms.send(item.phone,content)
-      mailid=mailid+item.email+",";
+      
+      mail.send(item.email,content,"Disaster Alert")
+      
     })
     if(mailid)
     {
-      mail.send(mailid,content,"Disaster Alert")
+      
     }
     res.status(200).json({ message: data.rows });
   } catch (err) {
